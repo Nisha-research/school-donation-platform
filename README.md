@@ -1,4 +1,4 @@
-# SchoolCare Connect
+# SchoolCare Connect: A Web-Based Platform for School Stationery & Needs Donation Management
 
 A school stationery & needs donation platform where a school posts specific item needs, donors pledge items, and the entire donation process is tracked visually in real time.
 
