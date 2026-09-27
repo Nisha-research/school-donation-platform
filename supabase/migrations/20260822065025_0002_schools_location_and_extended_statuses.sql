@@ -181,6 +181,12 @@ BEGIN
 END;
 $$;
 
+UPDATE schools 
+SET 
+  latitude = 18.9913,
+  longitude = 73.1776
+WHERE name = 'Janta Vidyalaya';
+
 -- ===== Seed default school and back-fill existing needs =====
 INSERT INTO schools (name, address, latitude, longitude)
 VALUES (
