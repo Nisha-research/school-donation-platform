@@ -194,8 +194,3 @@ ON CONFLICT DO NOTHING;
 UPDATE school_needs
 SET school_id = (SELECT id FROM schools WHERE name = 'Janta Vidyalaya School' LIMIT 1)
 WHERE school_id IS NULL;
-
-UPDATE schools
-SET latitude = 18.9913, logitude = 73.1776
-WHERE 
-name IS 'Janta Vidyalaya School':
