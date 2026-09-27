@@ -183,8 +183,8 @@ $$;
 
 UPDATE schools 
 SET 
-  latitude = 18.9098,
-  longitude = 73.1796
+  latitude = 18.8973,
+  longitude = 73.1856
 WHERE name = 'Janta Vidyalaya';
 
 -- ===== Seed default school and back-fill existing needs =====
