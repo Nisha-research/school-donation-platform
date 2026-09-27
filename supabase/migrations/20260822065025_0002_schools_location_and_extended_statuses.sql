@@ -192,8 +192,8 @@ INSERT INTO schools (name, address, latitude, longitude)
 VALUES (
   'Janta Vidyalaya School',
   'Mohopada, Rasayani, Raigad, Maharashtra 410206, India',
-  18.8.9098,
-  73.1796
+  18.8973,
+  73.1856
 )
 ON CONFLICT DO NOTHING;
 
