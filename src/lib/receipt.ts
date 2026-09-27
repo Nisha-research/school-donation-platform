@@ -1,54 +1,104 @@
-import { jsPDF } from 'jspdf';
-import type { DonationWithNeed } from '@/lib/types';
+import jsPDF from 'jspdf';
+import type { DonationWithNeed } from './types';
+import { formatDate } from './format';
 
 export function generateReceipt(donation: DonationWithNeed): void {
-  const document = new jsPDF();
-  const schoolName = donation.school_need?.school?.name ?? 'Janta Vidyalaya';
-  const itemName = donation.school_need?.item_name ?? 'Donation item';
-  const date = new Date(donation.donation_date).toLocaleDateString();
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 20;
+  const contentWidth = pageWidth - margin * 2;
 
-  document.setFillColor(31, 56, 100);
-  document.rect(0, 0, 210, 34, 'F');
-  document.setTextColor(255, 255, 255);
-  document.setFontSize(22);
-  document.setFont('helvetica', 'bold');
-  document.text('SchoolCare Connect', 20, 20);
-  document.setFontSize(10);
-  document.setFont('helvetica', 'normal');
-  document.text('Donation receipt', 20, 27);
+  // Header band
+  doc.setFillColor(31, 56, 100);
+  doc.rect(0, 0, pageWidth, 35, 'F');
 
-  document.setTextColor(31, 56, 100);
-  document.setFontSize(16);
-  document.setFont('helvetica', 'bold');
-  document.text('Thank you for your donation', 20, 55);
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.text('SchoolCare Connect', margin, 18);
 
-  document.setTextColor(60, 60, 60);
-  document.setFontSize(11);
-  document.setFont('helvetica', 'normal');
-  const details = [
-    ['Receipt ID', donation.id],
-    ['Donor', donation.donor_name],
-    ['Email', donation.email],
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text('Donation Receipt', margin, 26);
+  doc.text(new Date().toLocaleDateString('en-IN'), pageWidth - margin, 26, { align: 'right' });
+
+  // Body
+  let y = 50;
+  doc.setTextColor(30, 41, 59);
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14);
+  doc.text('Thank You for Your Donation', margin, y);
+  y += 8;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  const intro = `Dear ${donation.donor_name}, on behalf of the students and staff, thank you for your generous contribution.`;
+  const introLines = doc.splitTextToSize(intro, contentWidth);
+  doc.text(introLines, margin, y);
+  y += introLines.length * 6 + 6;
+
+  // Divider
+  doc.setDrawColor(200, 210, 225);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 8;
+
+  // Details table
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.text('Donation Details', margin, y);
+  y += 7;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+
+  const schoolName = donation.school_need?.school?.name ?? 'Green Valley Government School';
+  const itemName = donation.school_need?.item_name ?? 'Item';
+  const category = donation.school_need?.category ?? '—';
+
+  const rows: [string, string][] = [
     ['School', schoolName],
+    ['Donor Name', donation.donor_name],
+    ['Email', donation.email],
+    ['Phone', donation.phone],
     ['Item', itemName],
+    ['Category', category],
     ['Quantity', String(donation.quantity)],
+    ['Date', formatDate(donation.donation_date)],
     ['Status', donation.status],
-    ['Donation date', date],
+    ['Receipt ID', donation.id.slice(0, 8).toUpperCase()],
   ];
 
-  let y = 72;
-  for (const [label, value] of details) {
-    document.setFont('helvetica', 'bold');
-    document.text(`${label}:`, 20, y);
-    document.setFont('helvetica', 'normal');
-    document.text(value, 65, y);
-    y += 10;
-  }
+  rows.forEach(([label, value]) => {
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(100, 116, 139);
+    doc.text(label, margin, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(15, 23, 42);
+    doc.text(String(value), margin + 50, y);
+    y += 6;
+  });
 
-  document.setDrawColor(220, 226, 235);
-  document.line(20, y + 4, 190, y + 4);
-  document.setFontSize(10);
-  document.setTextColor(90, 90, 90);
-  document.text('Your support helps provide essential learning supplies to students.', 20, y + 18);
-  document.save(`schoolcare-receipt-${donation.id.slice(0, 8)}.pdf`);
+  y += 4;
+  doc.setDrawColor(200, 210, 225);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 8;
+
+  // Thank you note
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(11);
+  doc.setTextColor(30, 41, 59);
+  const note = 'Your donation helps provide essential school supplies to students who need them most. Every item you contribute makes a real difference in a child\'s education. We are deeply grateful for your support.';
+  const noteLines = doc.splitTextToSize(note, contentWidth);
+  doc.text(noteLines, margin, y);
+  y += noteLines.length * 6 + 6;
+
+  // Footer
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(100, 116, 139);
+  doc.text('SchoolCare Connect — Transparent donations for student success.', margin, 280);
+  doc.text('For questions, contact admin@schoolcare.org', margin, 285);
+
+  doc.save(`receipt-${donation.id.slice(0, 8)}.pdf`);
 }
