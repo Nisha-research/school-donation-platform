@@ -183,8 +183,8 @@ $$;
 
 UPDATE schools 
 SET 
-  latitude = 18.9913,
-  longitude = 73.1776
+  latitude = 18.9098,
+  longitude = 73.1796
 WHERE name = 'Janta Vidyalaya';
 
 -- ===== Seed default school and back-fill existing needs =====
@@ -192,8 +192,8 @@ INSERT INTO schools (name, address, latitude, longitude)
 VALUES (
   'Janta Vidyalaya School',
   'Mohopada, Rasayani, Raigad, Maharashtra 410206, India',
-  18.9913,
-  73.1776
+  18.8.9098,
+  73.1796
 )
 ON CONFLICT DO NOTHING;
 
