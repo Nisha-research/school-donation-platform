@@ -42,7 +42,7 @@ export function Footer() {
                 <Phone className="h-4 w-4 text-navy-300" /> +91 98765 43210
               </li>
               <li className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-navy-300" /> Green Valley, Dist. Pune
+                <MapPin className="h-4 w-4 text-navy-300" /> Janta Vidyalaya, Dist. Pune
               </li>
             </ul>
           </div>

@@ -73,7 +73,7 @@ export function HomePage() {
             <div className="animate-slide-up">
               <div className="inline-flex items-center gap-2 rounded-full bg-cta-500/15 px-4 py-1.5 text-sm font-medium text-cta-700 dark:bg-cta-500/20 dark:text-cta-300">
                 <Sparkles className="h-4 w-4" />
-                Green Valley Government School
+                Janta Vidyalaya School
               </div>
               <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight tracking-tight text-navy-900 dark:text-white sm:text-5xl">
                 Every child deserves the tools to learn.
@@ -166,7 +166,7 @@ export function HomePage() {
           <div>
             <h2 className="font-display text-3xl font-bold text-navy-900 dark:text-navy-100">Our Mission</h2>
             <p className="mt-4 text-slate-700 dark:text-slate-300 leading-relaxed">
-              Green Valley Government School serves 320 students from economically weaker
+              Janta Vidyalaya School serves 320 students from economically weaker
               backgrounds. Many lack basic stationery, bags, and textbooks — essentials that
               directly affect their ability to learn.
             </p>
