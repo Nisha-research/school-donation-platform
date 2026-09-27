@@ -166,7 +166,7 @@ export function AdminDashboardPage() {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10 } },
+            legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 10 } },
           },
           scales: {
             y: { beginAtZero: true, ticks: { font: { size: 10 } }, grid: { color: '#eef2f8' } },
@@ -201,7 +201,7 @@ export function AdminDashboardPage() {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10 } },
+            legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 10 } },
             tooltip: {
               callbacks: {
                 label: (ctx) => ` ${ctx.label}: ${ctx.raw} items required`,
