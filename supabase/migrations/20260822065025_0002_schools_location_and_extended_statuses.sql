@@ -35,8 +35,8 @@ users can see "My Donations". Expands the donation status lifecycle from 3 steps
 - UPDATE/DELETE on donations: admin-only.
 
 ## 5. Data
-- Inserts one default school ("Green Valley Government School") with coordinates
-  in Bengaluru, India, and back-fills existing school_needs rows to reference it.
+- Inserts one default school ("Janta Vidyalaya") with coordinates
+  in Mohopada, Rasayani, and back-fills existing school_needs rows to reference it.
 
 ## 6. Important notes
 - The recompute trigger function is updated to treat 'Delivered' and 'Completed'
@@ -93,16 +93,15 @@ BEGIN
   END IF;
 END $$;
 
--- ===== donations: expand status to 5-step lifecycle =====
--- Step 1: Drop old CHECK constraint
+-- Step 1: Drop old status CHECK constraint if exists
 DO $$
 DECLARE
   constraint_name text;
 BEGIN
-  SELECT con.conname INTO constraint_name
-  FROM pg_constraint con
-  JOIN pg_class rel ON rel.oid = con.conrelid
-  WHERE rel.relname = 'donations' AND con.contype = 'c'
+  SELECT constraint_name INTO constraint_name
+  FROM information_schema.table_constraints
+  WHERE table_name = 'donations'
+    AND constraint_type = 'CHECK'
     AND pg_get_constraintdef(con.oid) LIKE '%Pending%Received%Completed%';
   IF constraint_name IS NOT NULL THEN
     EXECUTE format('ALTER TABLE donations DROP CONSTRAINT %I', constraint_name);
@@ -184,13 +183,13 @@ $$;
 -- ===== Seed default school and back-fill existing needs =====
 INSERT INTO schools (name, address, latitude, longitude)
 VALUES (
-  'Green Valley Government School',
-  'Green Valley, Bengaluru, Karnataka 560001, India',
-  12.971599,
-  77.594566
+  'Janta Vidyalaya',
+  'Mohopada, Rasayani, Maharashtra, India',
+  18.863100,
+  73.130900
 )
 ON CONFLICT DO NOTHING;
 
 UPDATE school_needs
-SET school_id = (SELECT id FROM schools WHERE name = 'Green Valley Government School' LIMIT 1)
+SET school_id = (SELECT id FROM schools WHERE name = 'Janta Vidyalaya' LIMIT 1)
 WHERE school_id IS NULL;
