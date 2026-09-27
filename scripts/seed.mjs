@@ -1,16 +1,3 @@
-/**
- * Seed script for SchoolCare Connect.
- *
- * Run with: npm run seed
- *
- * This script connects directly to the Supabase database via the
- * service-role key and inserts sample school needs, donations, and a
- * survey record so the site works immediately after setup.
- *
- * It is idempotent — safe to run multiple times. Existing data is
- * preserved; only missing seed rows are inserted.
- */
-
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
@@ -78,7 +65,7 @@ async function seed() {
   console.log('3. Inserting survey record...');
   const { error: surveyError } = await supabase.from('survey').upsert(
     {
-      organization_name: 'Green Valley Government School',
+      organization_name: 'Janta Vidyalaya',
       total_students: 320,
       economically_weaker: 218,
       responses: [
