@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS schools (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   address text,
-  latitude float(9,6),
-  longitude float(9,6),
+  latitude numeric(9,6),
+  longitude numeric(9,6),
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
