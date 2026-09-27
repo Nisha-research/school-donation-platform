@@ -52,7 +52,7 @@ export function generateReceipt(donation: DonationWithNeed): void {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
 
-  const schoolName = donation.school_need?.school?.name ?? 'Green Valley Government School';
+  const schoolName = donation.school_need?.school?.name ?? 'Janta Vidyalaya';
   const itemName = donation.school_need?.item_name ?? 'Item';
   const category = donation.school_need?.category ?? '—';
 
