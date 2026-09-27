@@ -35,8 +35,8 @@ users can see "My Donations". Expands the donation status lifecycle from 3 steps
 - UPDATE/DELETE on donations: admin-only.
 
 ## 5. Data
-- Inserts one default school ("Green Valley Government School") with coordinates
-  in Bengaluru, India, and back-fills existing school_needs rows to reference it.
+- Inserts one default school ("Mohopada Government School") with coordinates
+  in Mohopada, Rasayani, Maharashtra, India, and back-fills existing school_needs rows to reference it.
 
 ## 6. Important notes
 - The recompute trigger function is updated to treat 'Delivered' and 'Completed'
@@ -184,13 +184,13 @@ $$;
 -- ===== Seed default school and back-fill existing needs =====
 INSERT INTO schools (name, address, latitude, longitude)
 VALUES (
-  'Green Valley Government School',
-  'Green Valley, Bengaluru, Karnataka 560001, India',
-  12.971599,
-  77.594566
+  'Mohopada Government School',
+  'Mohopada, Rasayani, Raigad, Maharashtra 410206, India',
+  18.9913,
+  73.1776
 )
 ON CONFLICT DO NOTHING;
 
 UPDATE school_needs
-SET school_id = (SELECT id FROM schools WHERE name = 'Green Valley Government School' LIMIT 1)
+SET school_id = (SELECT id FROM schools WHERE name = 'Mohopada Government School' LIMIT 1)
 WHERE school_id IS NULL;
