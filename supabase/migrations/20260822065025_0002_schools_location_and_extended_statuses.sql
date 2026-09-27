@@ -184,7 +184,7 @@ $$;
 -- ===== Seed default school and back-fill existing needs =====
 INSERT INTO schools (name, address, latitude, longitude)
 VALUES (
-  'Mohopada Government School',
+  'Janta Vidyalaya School',
   'Mohopada, Rasayani, Raigad, Maharashtra 410206, India',
   18.9913,
   73.1776
@@ -192,5 +192,5 @@ VALUES (
 ON CONFLICT DO NOTHING;
 
 UPDATE school_needs
-SET school_id = (SELECT id FROM schools WHERE name = 'Mohopada Government School' LIMIT 1)
+SET school_id = (SELECT id FROM schools WHERE name = 'Janta Vidyalaya School' LIMIT 1)
 WHERE school_id IS NULL;
